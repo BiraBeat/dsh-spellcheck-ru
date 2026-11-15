@@ -92,6 +92,13 @@ function verifyDirectory(dir, options) {
           fail(`${source} новее client.js — запустите node tools/build.mjs`)
         }
       }
+      const stampPath = join(dir, 'build-stamp.json')
+      if (!exists(stampPath)) fail('нет build-stamp.json — запустите node tools/build.mjs')
+      else {
+        const stamp = readJson(stampPath)
+        if (stamp.packageName !== name) fail('build-stamp.json: имя пакета не совпадает с манифестом')
+        if (stamp.version !== manifest.version) fail('build-stamp.json: версия не совпадает с манифестом')
+      }
     }
   }
 

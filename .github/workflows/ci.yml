@@ -28,7 +28,8 @@ jobs:
       - name: package
         run: node tools/verify-pack.mjs
 
-      # Собранный артефакт обязан совпадать с исходниками в коммите, иначе
-      # установка из git принесёт людям старую логику.
+      # Артефакт обязан быть собран из текущих исходников. Сравниваем штамп
+      # сборки, а не сам client.js: gzip-поток зависит от платформы и версии
+      # zlib, поэтому байты на Linux и Windows законно различаются.
       - name: committed artifact matches sources
-        run: git diff --exit-code -- client.js
+        run: git diff --exit-code -- build-stamp.json

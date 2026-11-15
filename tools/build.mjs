@@ -15,6 +15,7 @@
  * Запуск: node tools/build.mjs
  */
 import { readFileSync, writeFileSync, statSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { gzipSync } from 'node:zlib'
 import { createEngine } from '../src/spellcore.mjs'
 
@@ -80,6 +81,31 @@ if (client.includes('__PACKAGE_NAME__')) throw new Error('package name substitut
 
 const banner = '/* Собрано tools/build.mjs из src/client.template.js и src/spellcore.mjs. Не править вручную. */\n'
 writeFileSync(new URL('client.js', root), banner + client, 'utf8')
+
+/**
+ * Штамп сборки: хэши исходников, из которых получен артефакт.
+ *
+ * Побайтовое сравнение client.js между машинами невозможно: gzip-поток зависит
+ * от платформы и версии zlib, поэтому CI на Linux не совпадёт с локальной
+ * сборкой на Windows. Штамп зависит только от входных данных, поэтому годится
+ * для проверки «артефакт устарел, пересоберите».
+ */
+const sha256 = path => createHash('sha256').update(readBytes(path)).digest('hex')
+const sourceFiles = [
+  'package.json',
+  'src/client.template.js',
+  'src/spellcore.mjs',
+  'tools/vendor/ru_RU.aff',
+  'tools/vendor/ru_RU.dic',
+  'tools/vendor/ru_50k.txt',
+]
+const manifest = JSON.parse(read('package.json'))
+const stamp = {
+  packageName,
+  version: manifest.version,
+  sources: Object.fromEntries(sourceFiles.map(file => [file, sha256(file)])),
+}
+writeFileSync(new URL('build-stamp.json', root), `${JSON.stringify(stamp, null, 2)}\n`, 'utf8')
 
 const size = statSync(new URL('client.js', root)).size
 console.log('frequency words:', frequency.length)
