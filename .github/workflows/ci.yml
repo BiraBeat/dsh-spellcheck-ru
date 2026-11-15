@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Та же сборка, что делает автор: словарь и движок вшиваются в client.js.
+      - name: build client artifact
+        run: node tools/build.mjs
+
+      # 71 тест: движок словаря, собранный артефакт, путь «текст → подсветка →
+      # правая кнопка → замена» и упаковка бандла.
+      - name: tests
+        run: node --test tests/spellcore.test.mjs tests/client.artifact.test.mjs tests/client.dom.test.mjs tests/package.test.mjs
+
+      # Проверка ровно того набора файлов, который получат пользователи.
+      - name: package
+        run: node tools/verify-pack.mjs
+
+      # Собранный артефакт обязан совпадать с исходниками в коммите, иначе
+      # установка из git принесёт людям старую логику.
+      - name: committed artifact matches sources
+        run: git diff --exit-code -- client.js

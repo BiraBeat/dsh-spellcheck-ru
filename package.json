@@ -1,0 +1,67 @@
+{
+  "name": "dsh-spellcheck-ru",
+  "version": "1.1.0",
+  "description": "Russian spell check for DeepSeek Harness: right-click a misspelled word in the chat or in the message input to pick a replacement.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BiraBeat/dsh-spellcheck-ru.git"
+  },
+  "homepage": "https://github.com/BiraBeat/dsh-spellcheck-ru#readme",
+  "bugs": {
+    "url": "https://github.com/BiraBeat/dsh-spellcheck-ru/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "deepseek",
+    "plugin",
+    "bundle",
+    "spellcheck",
+    "spelling",
+    "russian",
+    "orthography",
+    "орфография"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "docs",
+    "icon.svg",
+    "README.md",
+    "LICENSE",
+    "LICENSES.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "node tools/build.mjs",
+    "test": "node --test tests/spellcore.test.mjs tests/client.artifact.test.mjs tests/client.dom.test.mjs tests/package.test.mjs",
+    "verify-pack": "node tools/verify-pack.mjs",
+    "prepublishOnly": "node tools/verify-pack.mjs --self"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-context-menu",
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  }
+}

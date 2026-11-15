@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" role="img" aria-label="Chat spell check">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="5.5" y="5.5" width="25" height="17" rx="4.5" stroke="#6b7280" stroke-width="2"/>
+    <path d="M11 22.5 L9.6 27 L16 22.5" stroke="#6b7280" stroke-width="2"/>
+    <path d="M10.5 12 H25.5" stroke="#8b93a1" stroke-width="1.8"/>
+    <path d="M10.5 16.5 H19" stroke="#8b93a1" stroke-width="1.8"/>
+    <path d="M10.4 19.7 q1.6 -1.7 3.2 0 t3.2 0" stroke="#e5484d" stroke-width="1.6"/>
+  </g>
+</svg>

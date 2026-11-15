@@ -1,0 +1,11 @@
+# Артефакты сборки и установки
+node_modules/
+dist/
+*.tgz
+package-lock.json
+
+# Служебные файлы ОС и редакторов
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

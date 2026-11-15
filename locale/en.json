@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Chat spell check (Russian)",
+    "description": "Underlines misspelled Russian words with a red wavy line and offers replacements on right-click, both in the chat transcript and in the message input where you type. Right-click an underlined word to pick one of the suggested spellings, add the word to your dictionary, or ignore it until the page is reloaded. In the input the chosen spelling is inserted with the normal editing command, so Ctrl+Z undoes it like any other edit; Chromium's built-in spell checker is switched off there to avoid two competing verdicts. Suggestions come from a Russian dictionary bundled inside the plugin, so no text leaves the machine and no network request is made. In the transcript a fix rewrites only that word on screen while the session log keeps the original text; in the input the draft itself changes. Words added to the dictionary are kept in local storage. Turn the bundle off to remove the underlines and the menu and to restore the built-in checker.",
+    "detail": "docs/DETAIL.md"
+  }
+}

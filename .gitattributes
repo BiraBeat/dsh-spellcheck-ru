@@ -1,0 +1,7 @@
+# Один и тот же перевод строки во всех системах: артефакт client.js собирается
+# с LF, а CI сравнивает его с коммитом через git diff.
+* text=auto eol=lf
+*.dic text eol=lf
+*.aff text eol=lf
+*.png binary
+*.jpg binary
